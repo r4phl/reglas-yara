@@ -1,0 +1,37 @@
+rule Detectar_Campana_Maliciosa_en_Navegadores {
+    meta:
+        description = "Detectar enlaces maliciosos relacionados con el robo de credenciales de Booking.com en los artefactos forenses de navegadores"
+
+    strings:
+        // Enlaces maliciosos específicos y patrones de URL
+        $url_fake_booking1 = "hxxps://account[.]booking-sign[.]com/sign-in?op_token=" ascii wide nocase
+        $url_fake_booking2 = /booking\.id\d+\.com/ nocase
+        $url_fake_booking3 = "booking.reserve-visit.com" ascii wide nocase
+
+        // URLs de alojamiento de archivos maliciosos
+        $url_google_drive = "drive.google.com" ascii wide nocase
+        $url_dropbox = "dropbox.com" ascii wide nocase
+        $url_mega = "mega.nz" ascii wide nocase
+        $url_discord = /cdn\.discordapp\.com/ nocase
+
+        // Patrones para Firefox
+        $firefox_pattern = /places\.sqlite|cookies\.sqlite|webappsstore\.sqlite/ nocase
+
+        // Patrones para Chrome
+        $chrome_pattern = /History|Cookies|Login Data|Web Data/ nocase
+
+        // Patrones para Edge
+        $edge_pattern = /spartan\.edb|WebCacheV01\.dat/ nocase
+
+        // Patrones para Safari
+        $safari_pattern = /History\.db|Cookies\.binarycookies/ nocase
+
+    condition:
+        (any of ($url_fake_booking*) or any of ($url_*)) and
+        (
+            $firefox_pattern or
+            $chrome_pattern or
+            $edge_pattern or
+            $safari_pattern
+        )
+}
