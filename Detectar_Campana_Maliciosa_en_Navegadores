@@ -3,20 +3,19 @@ rule Detectar_Campana_Maliciosa_en_Navegadores {
         description = "Detectar enlaces maliciosos relacionados con el robo de credenciales de Booking.com en los artefactos forenses de navegadores"
 
     strings:
-    
       
-		// Mensajes de gancho
-		$gancho1 = "Documents" ascii wide nocase
-		$gancho2 = "Passports" ascii wide nocase
-		$gancho3 = "Allergy" ascii wide nocase
-		$gancho4 = "Allergies" ascii wide nocase
-		$gancho5 = "Health" ascii wide nocase
-		$gancho6 = "Patient" ascii wide nocase
-		$gancho7 = "test" ascii wide nocase
+	// Mensajes de gancho
+	$gancho1 = "Documents" ascii wide nocase
+	$gancho2 = "Passports" ascii wide nocase
+	$gancho3 = "Allergy" ascii wide nocase
+	$gancho4 = "Allergies" ascii wide nocase
+	$gancho5 = "Health" ascii wide nocase
+	$gancho6 = "Patient" ascii wide nocase
+	$gancho7 = "test" ascii wide nocase
 		
-		//todos los mensajes tienen la palabra password
-		
-		$password = "password" ascii wide nocase
+	//todos los mensajes tienen la palabra password
+	
+	$password = "password" ascii wide nocase
 
         // URLs de alojamiento de archivos maliciosos
         $url_google_drive = "drive.google.com" ascii wide nocase
@@ -25,9 +24,9 @@ rule Detectar_Campana_Maliciosa_en_Navegadores {
         $url_discord = /cdn\.discordapp\.com/ nocase
 
 				
-		// Patrones de archivo de Outlook         
-		$outlook_pst = /(\.pst$)/ nocase         
-		$outlook_ost = /(\.ost$)/ nocase
+	// Patrones de archivo de Outlook         
+	$outlook_pst = /(\.pst$)/ nocase         
+	$outlook_ost = /(\.ost$)/ nocase
 		
     condition:
         ($password and any of ($gancho*) and any of ($url_*)) and
