@@ -31,7 +31,6 @@ rule Detectar_Campana_Maliciosa_en_Navegadores_2 {
     condition:
         ($password and any of ($gancho*) and any of ($url_*)) and
         (
-            $outlook_pst or 
-            $outlook_ost or 
+            $outlook_pst or $outlook_ost 
         )
 }
