@@ -1,4 +1,4 @@
-rule Detectar_Campana_Maliciosa_en_Navegadores {
+rule Detectar_Campana_Maliciosa_en_Navegadores_2 {
     meta:
         description = "Detectar enlaces maliciosos relacionados con el robo de credenciales de Booking.com en los artefactos forenses de navegadores"
 
