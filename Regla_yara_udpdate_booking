@@ -1,0 +1,18 @@
+rule Navegadores_y_URLs {
+    meta:
+        description = "Detectar artefactos forenses en navegadores comunes y URLs específicas"
+ 
+    strings:
+        // Patrones para archivos de historial de navegadores comunes
+        $firefox_hist = { 53 51 4C 69 74 65 20 66 6F 72 6D 61 74 20 33 00 } // Header de archivo SQLite (Firefox)
+        $chrome_hist = { 43 68 72 6F 6D 65 20 48 69 73 74 6F 72 79 } // "Chrome History" en hexadecimal
+        $edge_hist = { 45 64 67 65 20 48 69 73 74 6F 72 79 } // "Edge History" en hexadecimal
+        $safari_hist = { 53 61 66 61 72 69 20 68 69 73 74 6F 72 79 } // "Safari history" en hexadecimal
+ 
+        // Patrones para URLs específicas
+        $url3 = "drobox.pro" ascii // Añadida directamente sin codificación
+        $url4 = "drive.google.com/uc?export=download&confirm=no_antivirus" ascii // Añadida directamente sin codificación
+ 
+    condition:
+        ($firefox_hist or $chrome_hist or $edge_hist or $safari_hist) and ($url3 or $url4)
+}
